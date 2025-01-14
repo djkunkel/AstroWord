@@ -4,15 +4,16 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using AstroWordGame.Engine;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
-namespace Starfield
+namespace AstroWordGame.Scenes.Shared
 {
-    internal class Stars : Layer
+    internal class StarsLayer : Layer
     {
 
-        public Stars(float speed, int count)
+        public StarsLayer(Game game, Scene scene, float speed, int count) : base(game, scene)
         {
             _speed = speed;
             _count = count;
@@ -26,23 +27,23 @@ namespace Starfield
         Vector2[] stars { get; init; }
         Color[] starColors { get; init; }
 
-        
+
         private int _width;
         private int _height;
         private float _speed;
         private int _count;
 
-        public override void Init(int width, int height)
+        public override void Init()
         {
-            _width = width;
-            _height = height;
-            
-            for(int i = 0;i < _count; i++) 
+            _width = Game.Settings.Width;
+            _height = Game.Settings.Height;
+
+            for (int i = 0; i < _count; i++)
             {
                 var intensity = GetRandomValue(128, 255);
                 starColors[i] = new Color(intensity, intensity, intensity, 255);
-                stars[i].X = GetRandomValue(0, width);
-                stars[i].Y = GetRandomValue(0, height);
+                stars[i].X = GetRandomValue(0, _width);
+                stars[i].Y = GetRandomValue(0, _height);
             }
         }
 
@@ -50,8 +51,8 @@ namespace Starfield
         {
             for (int i = 0; i < _count; i++)
             {
-                stars[i].Y = (stars[i].Y + _speed*frameTime);
-                if(stars[i].Y > _height)
+                stars[i].Y = stars[i].Y + _speed * frameTime;
+                if (stars[i].Y > _height)
                 {
                     stars[i].Y = 0;
                     stars[i].X = GetRandomValue(0, _width);
@@ -66,6 +67,6 @@ namespace Starfield
             }
         }
 
-        
+
     }
 }

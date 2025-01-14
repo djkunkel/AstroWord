@@ -13,6 +13,9 @@ using System.Text;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using Starfield.Utils;
+using AstroWordGame.Engine;
+using AstroWordGame;
+using AstroWordGame.Scenes.Shared;
 
 namespace Starfield;
 
@@ -21,65 +24,43 @@ public class BasicWindow
     public static int Main()
     {
 
-        // Initialization
-        //--------------------------------------------------------------------------------------
-        const int screenWidth = 600;
-        const int screenHeight = 900;
 
-        SetConfigFlags(ConfigFlags.VSyncHint);
-        InitWindow(screenWidth, screenHeight, "Stars");
-
-
-
-
-        // construct layers
-        //--------------------------------------------------------------------------------------
-        var layers = new List<Layer>()
+        GameSettings settings = new GameSettings
         {
-            new Stars(50, 100),
-            new Stars(75, 60),
-            new Stars(100, 25),
-            new Ship()
+            Title = "AstroWord",
+            Height = 900,
+            Width = 600,
+            WindowFlags = ConfigFlags.VSyncHint
         };
 
-
-        //INIT
-        foreach(var layer in layers)
-        {
-            layer.Init(screenWidth, screenHeight);
-        }
+        var game = new AstroWord(settings);
 
 
+        //init window and graphics context
+        SetConfigFlags(settings.WindowFlags);
+        InitWindow(settings.Width, settings.Height, settings.Title);
+
+
+       
         // Main game loop
         while (!WindowShouldClose())
         {
-            var frameTime = GetFrameTime();
 
-            //crude frame limiter ?
-            //if (frameTime < 1f / 60f)
-            //{
-            //    Thread.Sleep((int)(1f / 60f - frameTime) * 1000);
-            //}
+
+            var frameTime = GetFrameTime();
 
             // Update
             //----------------------------------------------------------------------------------
-            // update each layer
-            foreach (var layer in layers)
-            {
-                layer.Update(frameTime);
-            }
-            //----------------------------------------------------------------------------------
+            game.Update(frameTime);
+
+           
 
             // Draw
             //----------------------------------------------------------------------------------
             BeginDrawing();
             ClearBackground(Color.Black);
 
-            //draw each layer
-            foreach (var layer in layers)
-            {
-                layer.Draw();
-            }
+            game.Draw();
 
             EndDrawing();
             //----------------------------------------------------------------------------------

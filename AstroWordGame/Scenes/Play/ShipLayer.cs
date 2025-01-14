@@ -5,12 +5,13 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using AstroWordGame.Engine;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
-namespace Starfield
+namespace AstroWordGame.Scenes.Play
 {
-    internal class Ship : Layer
+    internal class ShipLayer : Layer
     {
 
         Vector2[] projectiles;
@@ -19,7 +20,7 @@ namespace Starfield
         Vector2 position;
         private int _width;
         private int _height;
-        
+
         float shipSize = 40;
         float shipSpeed = 500;
         float shotSpeed = 600;
@@ -28,18 +29,19 @@ namespace Starfield
 
         Stopwatch letterTimer = new Stopwatch();
 
-        public Ship()
+        public ShipLayer(Game game, Scene scene):base(game, scene)
         {
             projectiles = new Vector2[20];
             letters = new Vector2[50];
 
         }
 
-        public override void Init(int width, int height)
+        public override void Init()
         {
-            position = new Vector2(width / 2, height - 75);
-            _width = width;
-            _height = height;
+            _width = Game.Settings.Width;
+            _height = Game.Settings.Height;
+            position = new Vector2(_width / 2, _height - 75);
+            shotsFired = 0;
             letterTimer.Start();
         }
 
@@ -49,11 +51,11 @@ namespace Starfield
             //movement
             if (IsKeyDown(KeyboardKey.Left))
             {
-                position.X = Math.Max(shipSize / 2, position.X - shipSpeed *frameTime);
+                position.X = Math.Max(shipSize / 2, position.X - shipSpeed * frameTime);
             }
             else if (IsKeyDown(KeyboardKey.Right))
             {
-                position.X = Math.Min(_width - (shipSize / 2), position.X + shipSpeed*frameTime);
+                position.X = Math.Min(_width - shipSize / 2, position.X + shipSpeed * frameTime);
             }
 
 
@@ -63,10 +65,10 @@ namespace Starfield
             {
                 if (projectiles[i].Y > 0)
                 {
-                    projectiles[i].Y = projectiles[i].Y - shotSpeed*frameTime;
+                    projectiles[i].Y = projectiles[i].Y - shotSpeed * frameTime;
                 }
 
-                if (!fired && IsKeyPressed(KeyboardKey.Space) && projectiles[i].Y<=0)
+                if (!fired && IsKeyPressed(KeyboardKey.Space) && projectiles[i].Y <= 0)
                 {
                     fired = true;
                     shotsFired++;
@@ -105,7 +107,7 @@ namespace Starfield
                 }
             }
 
-            
+
 
         }
 
@@ -134,7 +136,7 @@ namespace Starfield
                 }
             }
 
-            DrawText($"Shots fired: {shotsFired}", 10, _height-25, 20, Color.Magenta);
+            DrawText($"Shots fired: {shotsFired}", 10, _height - 25, 20, Color.Magenta);
         }
     }
 }
