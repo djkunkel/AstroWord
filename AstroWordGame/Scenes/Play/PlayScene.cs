@@ -12,10 +12,10 @@ namespace AstroWordGame.Scenes.Play
     {
         public PlayScene(Game game) : base(game)
         {
-            Layers.Add("star1", new StarsLayer(game, this, 50, 100));
-            Layers.Add("star2", new StarsLayer(game, this, 75, 60));
-            Layers.Add("star3", new StarsLayer(game, this, 100, 25));
-            Layers.Add("ship", new ShipLayer(game, this));
+            Layers.Add("star1", new StarsLayer(game.Settings, 50, 100));
+            Layers.Add("star2", new StarsLayer(game.Settings, 75, 60));
+            Layers.Add("star3", new StarsLayer(game.Settings, 100, 25));
+            Layers.Add("ship", new ShipLayer(game.Settings));  
         }
     }
 }

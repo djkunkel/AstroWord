@@ -14,7 +14,7 @@ namespace AstroWordGame.Scenes.Play
     {
         public WelcomeScene(Game game) : base(game)
         {
-            Layers.Add("stars", new StarsLayer(game, this, 50, 1000));
+            Layers.Add("stars", new StarsLayer(game.Settings, 50, 1000));
         }
 
         public override void Draw()

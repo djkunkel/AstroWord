@@ -29,7 +29,7 @@ namespace AstroWordGame.Scenes.Play
 
         Stopwatch letterTimer = new Stopwatch();
 
-        public ShipLayer(Game game, Scene scene):base(game, scene)
+        public ShipLayer(GameSettings settings):base(settings)
         {
             projectiles = new Vector2[20];
             letters = new Vector2[50];
@@ -38,8 +38,8 @@ namespace AstroWordGame.Scenes.Play
 
         public override void Init()
         {
-            _width = Game.Settings.Width;
-            _height = Game.Settings.Height;
+            _width = Settings.Width;
+            _height = Settings.Height;
             position = new Vector2(_width / 2, _height - 75);
             shotsFired = 0;
             letterTimer.Start();

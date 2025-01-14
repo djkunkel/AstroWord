@@ -8,21 +8,20 @@ namespace AstroWordGame.Engine
 {
     internal abstract class Layer : IDisposable
     {
-        protected Game Game {get; init;}
-        protected Scene Scene {get; init;}
+
+        protected GameSettings Settings { get; init; }
 
 
-        public Layer(Game game, Scene scene)
+        public Layer(GameSettings settings)
         {
-            Game = game;
-            Scene = scene;
+            Settings = settings;
         }
 
 
         public abstract void Init();
         public abstract void Update(float frameTime);
 
-        public virtual void AfterUpdate() { }
+        //public virtual void AfterUpdate() { }
 
         public abstract void Draw();
 

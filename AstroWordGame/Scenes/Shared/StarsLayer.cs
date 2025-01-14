@@ -13,7 +13,7 @@ namespace AstroWordGame.Scenes.Shared
     internal class StarsLayer : Layer
     {
 
-        public StarsLayer(Game game, Scene scene, float speed, int count) : base(game, scene)
+        public StarsLayer(GameSettings settings, float speed, int count) : base(settings)
         {
             _speed = speed;
             _count = count;
@@ -35,8 +35,8 @@ namespace AstroWordGame.Scenes.Shared
 
         public override void Init()
         {
-            _width = Game.Settings.Width;
-            _height = Game.Settings.Height;
+            _width = Settings.Width;
+            _height = Settings.Height;
 
             for (int i = 0; i < _count; i++)
             {
