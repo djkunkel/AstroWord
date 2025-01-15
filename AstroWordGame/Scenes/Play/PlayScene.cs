@@ -5,17 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using AstroWordGame.Engine;
 using AstroWordGame.Scenes.Shared;
+using Raylib_cs;
 
 namespace AstroWordGame.Scenes.Play
 {
-    internal class PlayScene : Scene
+    internal class PlayScene : Layer
     {
-        public PlayScene(Game game) : base(game)
+        public PlayScene(Rectangle drawArea) : base(drawArea)
         {
-            Layers.Add("star1", new StarsLayer(game.Settings, 50, 100));
-            Layers.Add("star2", new StarsLayer(game.Settings, 75, 60));
-            Layers.Add("star3", new StarsLayer(game.Settings, 100, 25));
-            Layers.Add("ship", new ShipLayer(game.Settings));  
+            AddChild(new StarsLayer(drawArea, 50, 100));
+            AddChild(new StarsLayer(drawArea, 75, 60));
+            AddChild(new StarsLayer(drawArea, 100, 25));
+            AddChild(new ShipLayer(drawArea));
         }
     }
 }

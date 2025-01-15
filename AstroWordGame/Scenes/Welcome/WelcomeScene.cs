@@ -8,13 +8,13 @@ using AstroWordGame.Scenes.Shared;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
-namespace AstroWordGame.Scenes.Play
+namespace AstroWordGame.Scenes.Welcome
 {
-    internal class WelcomeScene : Scene
+    internal class WelcomeScene : Layer
     {
-        public WelcomeScene(Game game) : base(game)
+        public WelcomeScene(Rectangle drawArea) : base(drawArea)
         {
-            Layers.Add("stars", new StarsLayer(game.Settings, 50, 1000));
+            AddChild(new StarsLayer(drawArea, 50, 1000));
         }
 
         public override void Draw()

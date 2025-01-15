@@ -6,49 +6,68 @@ using System.Text;
 using System.Threading.Tasks;
 using AstroWordGame.Engine;
 using AstroWordGame.Scenes.Play;
+using AstroWordGame.Scenes.Welcome;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
 namespace AstroWordGame
 {
-    internal class AstroWord : Game
+    internal class AstroWord : Layer
     {
-        
 
-        public AstroWord(GameSettings settings) : base(settings)
+
+
+
+        public AstroWord(Rectangle drawArea) : base(drawArea)
         {
-            Scenes.Add("welcome", new WelcomeScene(this));
-            Scenes.Add("play", new PlayScene(this));
-            ActivateScene("welcome");
+            welcomeScene = AddChild(new WelcomeScene(drawArea));
+            playScene = AddChild(new PlayScene(drawArea));
 
+            currentScene = Children[0];
         }
 
         bool paused = false;
+        private readonly Layer welcomeScene;
+        private readonly Layer playScene;
+        private Layer currentScene;
 
         public override void Update(float frameTime)
         {
 
-            switch (ActiveSceneKey)
+            if (currentScene == welcomeScene)
             {
-                case "welcome":
-                    if (IsKeyPressed(KeyboardKey.Enter)) {
-                        ActivateScene("play");
-                    }
-                    break;
-                case "play":
-                    if (IsKeyPressed(KeyboardKey.Q))
-                    {
-                        ActivateScene("welcome");
-                    }
-                    if (IsKeyPressed(KeyboardKey.P)) {
-                        paused = !paused;
-                    }
-                    break;
+                if (IsKeyPressed(KeyboardKey.Enter))
+                {
+                    currentScene = playScene;
+                }
+            }
+            else if (currentScene == playScene)
+            {
+
+                if (IsKeyPressed(KeyboardKey.Q))
+                {
+                    currentScene = welcomeScene;
+                }
+                if (IsKeyPressed(KeyboardKey.P))
+                {
+                    paused = !paused;
+                }
+
             }
 
+          
             if (!paused)
             {
                 base.Update(frameTime);
+            }
+
+        }
+
+        public override IEnumerable<Layer> ActiveLayers
+        {
+            get
+            {
+                yield return currentScene;
             }
         }
     }

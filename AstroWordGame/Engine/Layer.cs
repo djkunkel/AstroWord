@@ -1,29 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Raylib_cs;
 
 namespace AstroWordGame.Engine
 {
     internal abstract class Layer : IDisposable
     {
+        protected readonly Rectangle DrawArea;
+        private readonly List<Layer> children = new List<Layer>();
 
-        protected GameSettings Settings { get; init; }
 
+        public ReadOnlyCollection<Layer> Children { 
+            get { return children.AsReadOnly(); }
+        }
+        protected Layer Parent { get; private set; } = EmptyLayer.Empty;
 
-        public Layer(GameSettings settings)
+        public Layer(Rectangle drawArea)
         {
-            Settings = settings;
+            this.DrawArea = drawArea;
         }
 
 
-        public abstract void Init();
-        public abstract void Update(float frameTime);
+        protected void SetParent(Layer layer)
+        {
+            Parent = layer;
+        }
 
-        //public virtual void AfterUpdate() { }
+        protected Layer AddChild(Layer layer)
+        {
+            children.Add(layer);
+            layer.Parent = this;
+            return layer;
+        }
 
-        public abstract void Draw();
+        public virtual IEnumerable<Layer> ActiveLayers
+        {
+            get
+            {
+                return children;
+            }
+        }
+
+
+        public virtual void Update(float frameTime)
+        {
+            foreach (var layer in ActiveLayers)
+            {
+                layer.Update(frameTime);
+            }
+        }
+
+        public virtual void Draw()
+        {
+            foreach (var layer in ActiveLayers)
+            {
+                layer.Draw();
+            }
+        }
 
         public virtual void Dispose()
         {

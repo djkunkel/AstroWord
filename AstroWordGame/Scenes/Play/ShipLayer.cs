@@ -18,8 +18,8 @@ namespace AstroWordGame.Scenes.Play
         Vector2[] letters;
 
         Vector2 position;
-        private int _width;
-        private int _height;
+        private float width;
+        private float height;
 
         float shipSize = 40;
         float shipSpeed = 500;
@@ -29,24 +29,27 @@ namespace AstroWordGame.Scenes.Play
 
         Stopwatch letterTimer = new Stopwatch();
 
-        public ShipLayer(GameSettings settings):base(settings)
+    
+
+        public ShipLayer(Rectangle drawArea) : base(drawArea)
         {
             projectiles = new Vector2[20];
             letters = new Vector2[50];
-
-        }
-
-        public override void Init()
-        {
-            _width = Settings.Width;
-            _height = Settings.Height;
-            position = new Vector2(_width / 2, _height - 75);
+            width = drawArea.Width;
+            height = drawArea.Height;
+            position = new Vector2(width / 2, height - 75);
             shotsFired = 0;
-            letterTimer.Start();
+           
         }
+
+
 
         public override void Update(float frameTime)
         {
+            if (!letterTimer.IsRunning)
+            {
+                letterTimer.Start();
+            }
 
             //movement
             if (IsKeyDown(KeyboardKey.Left))
@@ -55,7 +58,7 @@ namespace AstroWordGame.Scenes.Play
             }
             else if (IsKeyDown(KeyboardKey.Right))
             {
-                position.X = Math.Min(_width - shipSize / 2, position.X + shipSpeed * frameTime);
+                position.X = Math.Min(width - shipSize / 2, position.X + shipSpeed * frameTime);
             }
 
 
@@ -86,7 +89,7 @@ namespace AstroWordGame.Scenes.Play
                 }
                 else
                 {
-                    if (letters[i].Y > _height)
+                    if (letters[i].Y > height)
                         letters[i].Y = 0;
                 }
             }
@@ -101,7 +104,7 @@ namespace AstroWordGame.Scenes.Play
                     if (letters[i].Y == 0)
                     {
                         letters[i].Y = 1;
-                        letters[i].X = GetRandomValue(0, _width);
+                        letters[i].X = GetRandomValue(0, (int)width);
                         break;
                     }
                 }
@@ -136,7 +139,7 @@ namespace AstroWordGame.Scenes.Play
                 }
             }
 
-            DrawText($"Shots fired: {shotsFired}", 10, _height - 25, 20, Color.Magenta);
+            DrawText($"Shots fired: {shotsFired}", 10, (int)height - 25, 20, Color.Magenta);
         }
     }
 }

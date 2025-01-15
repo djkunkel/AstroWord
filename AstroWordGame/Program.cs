@@ -50,7 +50,7 @@ public class BasicWindow
             WindowFlags = ConfigFlags.VSyncHint
         };
 
-        var game = new AstroWord(settings);
+        var game = new AstroWord(new Rectangle(0, 0, settings.Width, settings.Height));
 
 
         //init window and graphics context
