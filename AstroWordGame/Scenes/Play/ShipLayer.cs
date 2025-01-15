@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -13,11 +14,10 @@ namespace AstroWordGame.Scenes.Play
 {
     internal class ShipLayer : Layer
     {
-
         Vector2[] projectiles;
         Vector2[] letters;
-
         Vector2 position;
+
         private float width;
         private float height;
 
@@ -33,13 +33,31 @@ namespace AstroWordGame.Scenes.Play
 
         public ShipLayer(Rectangle drawArea) : base(drawArea)
         {
-            projectiles = new Vector2[20];
-            letters = new Vector2[50];
             width = drawArea.Width;
             height = drawArea.Height;
-            position = new Vector2(width / 2, height - 75);
-            shotsFired = 0;
+            Reset();
            
+        }
+
+        [MemberNotNull(nameof(projectiles), nameof(letters))]
+        internal void Reset()
+        {
+            shotsFired = 0;
+            position = new Vector2(width / 2, height - 75);
+            projectiles = new Vector2[20];
+            letters = new Vector2[50];
+        }
+
+        internal IEnumerable<Vector2> ActiveProjectiles
+        {
+            get
+            {
+                foreach(var bullet in projectiles)
+                {
+                    if(bullet.Y>0)
+                        yield return bullet;
+                }
+            }
         }
 
 
@@ -141,5 +159,7 @@ namespace AstroWordGame.Scenes.Play
 
             Raylib.DrawText($"Shots fired: {shotsFired}", 10, (int)height - 25, 20, Color.Magenta);
         }
+
+        
     }
 }

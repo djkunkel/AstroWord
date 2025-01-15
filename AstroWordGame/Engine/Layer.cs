@@ -11,13 +11,16 @@ namespace AstroWordGame.Engine
     public class Layer : IDisposable
     {
         protected readonly Rectangle DrawArea;
-        private readonly List<Layer> children = new List<Layer>();
 
 
-        public ReadOnlyCollection<Layer> Children { 
-            get { return children.AsReadOnly(); }
+        public List<Layer> Children { get; init; } = new List<Layer>();
+
+
+        protected L AddChild<L>(L layer) where L : Layer
+        {
+            Children.Add(layer);
+            return layer;
         }
-        protected Layer Parent { get; private set; } = Layer.Empty;
 
         public Layer(Rectangle drawArea)
         {
@@ -25,23 +28,11 @@ namespace AstroWordGame.Engine
         }
 
 
-        protected void SetParent(Layer layer)
-        {
-            Parent = layer;
-        }
-
-        protected Layer AddChild(Layer layer)
-        {
-            children.Add(layer);
-            layer.Parent = this;
-            return layer;
-        }
-
         public virtual IEnumerable<Layer> ActiveLayers
         {
             get
             {
-                return children;
+                return Children;
             }
         }
 
@@ -66,6 +57,7 @@ namespace AstroWordGame.Engine
         {
 
         }
+
 
         public static readonly Layer Empty = new(new Rectangle(0, 0, 0, 0));
     }

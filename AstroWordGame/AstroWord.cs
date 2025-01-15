@@ -44,7 +44,7 @@ namespace AstroWordGame
                 {
                     currentScene = welcomeScene;
                 }
-                if (Raylib.IsKeyPressed(KeyboardKey.P))
+                else if (Raylib.IsKeyPressed(KeyboardKey.P))
                 {
                     paused = !paused;
                 }
