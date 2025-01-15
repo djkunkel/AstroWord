@@ -11,7 +11,6 @@ using System.Numerics;
 using System;
 using System.Text;
 using Raylib_cs;
-using static Raylib_cs.Raylib;
 using Starfield.Utils;
 using AstroWordGame.Engine;
 using AstroWordGame;
@@ -54,17 +53,17 @@ public class BasicWindow
 
 
         //init window and graphics context
-        SetConfigFlags(settings.WindowFlags);
-        InitWindow(settings.Width, settings.Height, settings.Title);
+        Raylib.SetConfigFlags(settings.WindowFlags);
+        Raylib.InitWindow(settings.Width, settings.Height, settings.Title);
 
 
        
         // Main game loop
-        while (!WindowShouldClose())
+        while (!Raylib.WindowShouldClose())
         {
 
 
-            var frameTime = GetFrameTime();
+            var frameTime = Raylib.GetFrameTime();
 
             // Update
             //----------------------------------------------------------------------------------
@@ -74,18 +73,18 @@ public class BasicWindow
 
             // Draw
             //----------------------------------------------------------------------------------
-            BeginDrawing();
-            ClearBackground(Color.Black);
+            Raylib.BeginDrawing();
+            Raylib.ClearBackground(Color.Black);
 
             game.Draw();
 
-            EndDrawing();
+            Raylib.EndDrawing();
             //----------------------------------------------------------------------------------
         }
 
         // De-Initialization
         //--------------------------------------------------------------------------------------
-        CloseWindow();
+        Raylib.CloseWindow();
         //--------------------------------------------------------------------------------------
 
         return 0;

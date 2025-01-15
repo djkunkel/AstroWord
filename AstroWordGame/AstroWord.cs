@@ -8,16 +8,12 @@ using AstroWordGame.Engine;
 using AstroWordGame.Scenes.Play;
 using AstroWordGame.Scenes.Welcome;
 using Raylib_cs;
-using static Raylib_cs.Raylib;
+
 
 namespace AstroWordGame
 {
     internal class AstroWord : Layer
     {
-
-
-
-
         public AstroWord(Rectangle drawArea) : base(drawArea)
         {
             welcomeScene = AddChild(new WelcomeScene(drawArea));
@@ -36,7 +32,7 @@ namespace AstroWordGame
 
             if (currentScene == welcomeScene)
             {
-                if (IsKeyPressed(KeyboardKey.Enter))
+                if (Raylib.IsKeyPressed(KeyboardKey.Enter))
                 {
                     currentScene = playScene;
                 }
@@ -44,11 +40,11 @@ namespace AstroWordGame
             else if (currentScene == playScene)
             {
 
-                if (IsKeyPressed(KeyboardKey.Q))
+                if (Raylib.IsKeyPressed(KeyboardKey.Q))
                 {
                     currentScene = welcomeScene;
                 }
-                if (IsKeyPressed(KeyboardKey.P))
+                if (Raylib.IsKeyPressed(KeyboardKey.P))
                 {
                     paused = !paused;
                 }

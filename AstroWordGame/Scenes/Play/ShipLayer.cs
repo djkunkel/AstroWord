@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AstroWordGame.Engine;
 using Raylib_cs;
-using static Raylib_cs.Raylib;
+
 
 namespace AstroWordGame.Scenes.Play
 {
@@ -52,11 +52,11 @@ namespace AstroWordGame.Scenes.Play
             }
 
             //movement
-            if (IsKeyDown(KeyboardKey.Left))
+            if (Raylib.IsKeyDown(KeyboardKey.Left))
             {
                 position.X = Math.Max(shipSize / 2, position.X - shipSpeed * frameTime);
             }
-            else if (IsKeyDown(KeyboardKey.Right))
+            else if (Raylib.IsKeyDown(KeyboardKey.Right))
             {
                 position.X = Math.Min(width - shipSize / 2, position.X + shipSpeed * frameTime);
             }
@@ -71,7 +71,7 @@ namespace AstroWordGame.Scenes.Play
                     projectiles[i].Y = projectiles[i].Y - shotSpeed * frameTime;
                 }
 
-                if (!fired && IsKeyPressed(KeyboardKey.Space) && projectiles[i].Y <= 0)
+                if (!fired && Raylib.IsKeyPressed(KeyboardKey.Space) && projectiles[i].Y <= 0)
                 {
                     fired = true;
                     shotsFired++;
@@ -104,7 +104,7 @@ namespace AstroWordGame.Scenes.Play
                     if (letters[i].Y == 0)
                     {
                         letters[i].Y = 1;
-                        letters[i].X = GetRandomValue(0, (int)width);
+                        letters[i].X = Raylib.GetRandomValue(0, (int)width);
                         break;
                     }
                 }
@@ -116,7 +116,7 @@ namespace AstroWordGame.Scenes.Play
 
         public override void Draw()
         {
-            DrawTriangle(
+            Raylib.DrawTriangle(
                 new Vector2(position.X + shipSize / 2, position.Y + shipSize),
                 new Vector2(position.X, position.Y),
                 new Vector2(position.X - shipSize / 2, position.Y + shipSize),
@@ -127,7 +127,7 @@ namespace AstroWordGame.Scenes.Play
             {
                 if (projectiles[i].Y > 0)
                 {
-                    DrawCircle((int)projectiles[i].X, (int)projectiles[i].Y, 4.0f, Color.Green);
+                    Raylib.DrawCircle((int)projectiles[i].X, (int)projectiles[i].Y, 4.0f, Color.Green);
                 }
             }
 
@@ -135,11 +135,11 @@ namespace AstroWordGame.Scenes.Play
             {
                 if (letters[i].Y > 0)
                 {
-                    DrawText("A", (int)letters[i].X, (int)letters[i].Y, 40, Color.Gold);
+                    Raylib.DrawText("A", (int)letters[i].X, (int)letters[i].Y, 40, Color.Gold);
                 }
             }
 
-            DrawText($"Shots fired: {shotsFired}", 10, (int)height - 25, 20, Color.Magenta);
+            Raylib.DrawText($"Shots fired: {shotsFired}", 10, (int)height - 25, 20, Color.Magenta);
         }
     }
 }

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using AstroWordGame.Engine;
 using AstroWordGame.Scenes.Shared;
 using Raylib_cs;
-using static Raylib_cs.Raylib;
 
 namespace AstroWordGame.Scenes.Welcome
 {
@@ -22,7 +21,7 @@ namespace AstroWordGame.Scenes.Welcome
 
             base.Draw();
 
-            DrawText("Press enter to play", 20, 50, 20, Color.Green);
+            Raylib.DrawText("Press enter to play", 20, 50, 20, Color.Green);
 
         }
 

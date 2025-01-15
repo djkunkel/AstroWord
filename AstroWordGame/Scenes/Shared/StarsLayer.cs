@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using AstroWordGame.Engine;
 using Raylib_cs;
-using static Raylib_cs.Raylib;
 
 namespace AstroWordGame.Scenes.Shared
 {
@@ -24,10 +23,10 @@ namespace AstroWordGame.Scenes.Shared
 
             for (int i = 0; i < _count; i++)
             {
-                var intensity = GetRandomValue(128, 255);
+                var intensity = Raylib.GetRandomValue(128, 255);
                 _starColors[i] = new Color(intensity, intensity, intensity, 255);
-                _stars[i].X = GetRandomValue(0, (int)_width);
-                _stars[i].Y = GetRandomValue(0, (int)_height);
+                _stars[i].X = Raylib.GetRandomValue(0, (int)_width);
+                _stars[i].Y = Raylib.GetRandomValue(0, (int)_height);
             }
         }
 
@@ -50,7 +49,7 @@ namespace AstroWordGame.Scenes.Shared
                 if (_stars[i].Y > _height)
                 {
                     _stars[i].Y = 0;
-                    _stars[i].X = GetRandomValue(0, (int)_width);
+                    _stars[i].X = Raylib.GetRandomValue(0, (int)_width);
                 }
             }
         }
@@ -58,7 +57,7 @@ namespace AstroWordGame.Scenes.Shared
         {
             for (int i = 0; i < _count; i++)
             {
-                DrawCircle((int)_stars[i].X, (int)_stars[i].Y, 1, _starColors[i]);
+                Raylib.DrawCircle((int)_stars[i].X, (int)_stars[i].Y, 1, _starColors[i]);
             }
         }
 

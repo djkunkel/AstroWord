@@ -8,7 +8,7 @@ using Raylib_cs;
 
 namespace AstroWordGame.Engine
 {
-    internal abstract class Layer : IDisposable
+    public class Layer : IDisposable
     {
         protected readonly Rectangle DrawArea;
         private readonly List<Layer> children = new List<Layer>();
@@ -17,7 +17,7 @@ namespace AstroWordGame.Engine
         public ReadOnlyCollection<Layer> Children { 
             get { return children.AsReadOnly(); }
         }
-        protected Layer Parent { get; private set; } = EmptyLayer.Empty;
+        protected Layer Parent { get; private set; } = Layer.Empty;
 
         public Layer(Rectangle drawArea)
         {
@@ -66,5 +66,7 @@ namespace AstroWordGame.Engine
         {
 
         }
+
+        public static readonly Layer Empty = new(new Rectangle(0, 0, 0, 0));
     }
 }
