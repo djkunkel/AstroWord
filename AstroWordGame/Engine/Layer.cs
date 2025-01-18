@@ -58,7 +58,6 @@ namespace AstroWordGame.Engine
 
         }
 
-
         public static readonly Layer Empty = new(new Rectangle(0, 0, 0, 0));
     }
 }

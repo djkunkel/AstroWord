@@ -22,7 +22,7 @@ public class BasicWindow
 {
     public static int Main()
     {
-        
+
         /*
          * Plan of attack
          * 
@@ -46,7 +46,7 @@ public class BasicWindow
             Title = "AstroWord",
             Height = 900,
             Width = 600,
-            WindowFlags = ConfigFlags.VSyncHint
+            WindowFlags = ConfigFlags.VSyncHint | ConfigFlags.Msaa4xHint
         };
 
         var game = new AstroWord(new Rectangle(0, 0, settings.Width, settings.Height));

@@ -19,7 +19,7 @@ namespace AstroWordGame
             welcomeScene = AddChild(new WelcomeScene(drawArea));
             playScene = AddChild(new PlayScene(drawArea));
 
-            currentScene = Children[0];
+            currentScene = welcomeScene;
         }
 
         bool paused = false;
